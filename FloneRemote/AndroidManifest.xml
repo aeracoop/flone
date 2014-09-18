@@ -1,1 +1,23 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="processing.test.floneremote"><uses-sdk android:minSdkVersion="8"/><application android:debuggable="false" android:icon="@drawable/icon" android:label="FloneRemote"><activity android:name="net.aeracoop.flone.remote.FloneRemote"><intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter></activity></application><uses-permission android:name="android.permission.BLUETOOTH"/><uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/><uses-permission android:name="android.permission.VIBRATE"/></manifest>
+<manifest 
+	xmlns:android="http://schemas.android.com/apk/res/android" 
+	android:versionCode="2"
+	android:versionName="1.1" 
+	package="processing.test.floneremote">
+<uses-sdk android:minSdkVersion="8"/>
+<application android:debuggable="false"
+	android:icon="@drawable/icon" 
+	android:label="FloneRemote">
+	<activity android:name="net.aeracoop.flone.remote.FloneRemote"
+		android:screenOrientation="portrait"
+		android:configChanges="orientation|keyboardHidden">
+		<intent-filter>
+			<action android:name="android.intent.action.MAIN"/>
+				<category android:name="android.intent.category.LAUNCHER"/>					
+		</intent-filter></activity>
+					
+</application>
+<uses-permission android:name="android.permission.BLUETOOTH"/>
+<uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+<uses-permission android:name="android.permission.VIBRATE"/>
+	
+</manifest>

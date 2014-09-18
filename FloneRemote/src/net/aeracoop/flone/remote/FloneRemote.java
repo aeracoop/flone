@@ -1,16 +1,21 @@
 package net.aeracoop.flone.remote;
 
+/**
+ * Flone, The flying phone
+ * By Lot Amoros from Aeracoop
+ * GPL v3
+ * http://flone.aeracoop.net
+ */
+
 import processing.core.*; 
-//import processing.data.*; 
-//import processing.event.*; 
-//import processing.opengl.*; 
 
 import java.util.List; 
 import java.util.LinkedList; 
 import java.lang.StringBuffer; 
 import controlP5.*; 
 import android.util.DisplayMetrics; 
-import android.os.Bundle; 
+import android.os.Bundle;
+//import android.os.Debug.WaitForDebugger;
 import android.content.BroadcastReceiver; 
 import android.content.Context; 
 import android.content.IntentFilter; 
@@ -20,9 +25,9 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent; 
 import android.hardware.SensorEventListener; 
 import android.hardware.SensorManager; 
-import android.bluetooth.BluetoothAdapter; 
-import android.bluetooth.BluetoothDevice; 
-import android.bluetooth.BluetoothSocket; 
+import android.bluetooth.BluetoothAdapter;//b 
+import android.bluetooth.BluetoothDevice; //b
+import android.bluetooth.BluetoothSocket; //b
 //import android.R; 
 import android.view.inputmethod.InputMethodManager; 
 import java.io.IOException; 
@@ -30,37 +35,9 @@ import java.io.InputStream;
 import java.io.OutputStream; 
 import java.lang.reflect.InvocationTargetException; 
 import java.lang.reflect.Method; 
-//import android.bluetooth.BluetoothAdapter; 
-//import android.bluetooth.BluetoothDevice; 
-//import android.bluetooth.BluetoothSocket; 
 import android.util.Log; 
 
-//import java.util.HashMap; 
-//import java.util.ArrayList; 
-//import java.io.File; 
-//import java.io.BufferedReader; 
-//import java.io.PrintWriter; 
-//import java.io.InputStream; 
-//import java.io.OutputStream; 
-//import java.io.IOException; 
-
 public class FloneRemote extends PApplet {
-
-/**
- * Flone, The flying phone
- * By Lot Amoros from Aeracoop
- * GPL v3
- * http://flone.aeracoop.net
- */
-
-/*
-Mac OSX: Do this in terminal in each Processing update
- ln -s /Library/Java/JavaVirtualMachines/jdk1.7.0_51.jdk/Contents/Home/bin/javac /Applications/Processing.app/Contents/PlugIns/jdk1.7.0_51.jdk/Contents/Home/jre/bin/javac
- */
-
-//For Manage Garvage Collector
-//import java.lang.management.GarbageCollectorMXBean;
-//import java.lang.management.ManagementFactory;
 
 // P control implementation.
 /*
@@ -80,48 +57,6 @@ Kp = constant proporcional;// (el que li tocarem nosaltres) 1000 y 2000
  yaw = 1500 + GirFlone;
  */
 
-
-//Java
-
-
- // for efficient String concatenation
-//import java.util.UUID; 
-//import java.lang.Object.Looper;
-
-//Processing
-
-
-//Android
- 
-//import android.app.Activity;
-//import android.app.AlertDialog;
-
-
-
-
-
-//import android.content.DialogInterface;
-//import android.content.DialogInterface.OnClickListener;
-
-
-//Sensors
-
-
-
-
-
-//Bluetooth
-
-
-
-
-//static BluetoothAdapter adaptador;
-//static BluetoothDevice dispositivo;
-//static BluetoothSocket socket;
-//static InputStream ins;
-//static OutputStream ons;
-//boolean registrado = false;
-
 // Sensor objects
 static SensorManager mSensorManager;
 static SensorEventListener sensorEventListener;
@@ -131,9 +66,7 @@ static Sensor gravity;
 
 // Bluetooth manager
 static TBlue tBlue; 
-
 static boolean sensorAvailable = false;
-
 static float azimuth       = 0.0f;
 static float pitch         = 0.0f;
 static float roll          = 0.0f;
@@ -267,7 +200,7 @@ private static Knob batKnob;
 private static Knob satKnob;
 //private static Knob btKnob;
 
-private static String floneId;
+public static String floneId;
 private static Button txtId;
 
 private static Textlabel btName;
@@ -281,6 +214,7 @@ int buttonHeight = PApplet.parseInt (28 * 2);
 
 public void setup()
 {  
+	//android.os.Debug.waitForDebugger();
   //Garbage collector can kill your drone
   System.gc();
   floneId = "flone1";
@@ -336,7 +270,6 @@ public void setup()
 
   cp5 = new ControlP5(this); 
   cp5.setFont(fontFlone);
-
 
   armToggle = new Toggle(cp5, "arm");
   armToggle.setMode(ControlP5.SWITCH)
@@ -471,10 +404,11 @@ public void setup()
   rcStickAUX3Slider.captionLabel().align(ControlP5.RIGHT, ControlP5.CENTER).setPaddingX(10);
   rcStickAUX4Slider.captionLabel().align(ControlP5.RIGHT, ControlP5.CENTER).setPaddingX(10);
 
-  orientation(PORTRAIT);
+  //orientation(PORTRAIT);
   //Looper.prepare();
   //getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
   maxCycle =0;
+  System.out.println("setup ok");
 }
 
 public void draw()
@@ -517,90 +451,10 @@ public void draw()
     }
   }
   drawFlyActivity();
-
-  //GarbageCollectorMXBean gcBean = ManagementFactory.getGarbageCollectorMXBeans().get(0);
-  // List<GarbageCollectorMXBean> gcbeans = java.lang.management.ManagementFactory.getGarbageCollectorMXBeans();
-  //gcBean.getCollectionCount();
-  /*for (GarbageCollectorMXBean gcBean : ManagementFactory.getGarbageCollectorMXBeans()) {
-   System.out.println(gcBean.getCollectionCount());
-   
-   com.sun.management.GarbageCollectorMXBean sunGcBean = (com.sun.management.GarbageCollectorMXBean) gcBean;
-   System.out.println(sunGcBean.getLastGcInfo().getStartTime());}*/
 }
 
 
-/*
-public boolean onCreateOptionsMenu(Menu menu) {
- MenuInflater inflater = getMenuInflater();
- inflater.inflate(R.menu.game_menu, menu);
- return true;
- }*/
-
-/*
-public static void installGCMonitoring() {
- //get all the GarbageCollectorMXBeans - there's one for each heap generation
- //so probably two - the old generation and young generation
- List<GarbageCollectorMXBean> gcbeans = java.lang.management.ManagementFactory.getGarbageCollectorMXBeans();
- //Install a notifcation handler for each bean
- for (GarbageCollectorMXBean gcbean : gcbeans) {
- System.out.println(gcbean);
- NotificationEmitter emitter = (NotificationEmitter) gcbean;
- //use an anonymously generated listener for this example
- // - proper code should really use a named class
- NotificationListener listener = new NotificationListener() {
- //keep a count of the total time spent in GCs
- long totalGcDuration = 0;
  
- //implement the notifier callback handler
- @Override
- public void handleNotification(Notification notification, Object handback) {
- //we only handle GARBAGE_COLLECTION_NOTIFICATION notifications here
- if (notification.getType().equals(GarbageCollectionNotificationInfo.GARBAGE_COLLECTION_NOTIFICATION)) {
- //get the information associated with this notification
- GarbageCollectionNotificationInfo info = GarbageCollectionNotificationInfo.from((CompositeData) notification.getUserData());
- //get all the info and pretty print it
- long duration = info.getGcInfo().getDuration();
- String gctype = info.getGcAction();
- if ("end of minor GC".equals(gctype)) {
- gctype = "Young Gen GC";
- } 
- else if ("end of major GC".equals(gctype)) {
- gctype = "Old Gen GC";
- }
- System.out.println();
- System.out.println(gctype + ": - " + info.getGcInfo().getId()+ " " + info.getGcName() + " (from " + info.getGcCause()+") "+duration + " microseconds; start-end times " + info.getGcInfo().getStartTime()+ "-" + info.getGcInfo().getEndTime());
- //System.out.println("GcInfo CompositeType: " + info.getGcInfo().getCompositeType());
- //System.out.println("GcInfo MemoryUsageAfterGc: " + info.getGcInfo().getMemoryUsageAfterGc());
- //System.out.println("GcInfo MemoryUsageBeforeGc: " + info.getGcInfo().getMemoryUsageBeforeGc());
- 
- //Get the information about each memory space, and pretty print it
- Map<String, MemoryUsage> membefore = info.getGcInfo().getMemoryUsageBeforeGc();
- Map<String, MemoryUsage> mem = info.getGcInfo().getMemoryUsageAfterGc();
- for (Entry<String, MemoryUsage> entry : mem.entrySet()) {
- String name = entry.getKey();
- MemoryUsage memdetail = entry.getValue();
- long memInit = memdetail.getInit();
- long memCommitted = memdetail.getCommitted();
- long memMax = memdetail.getMax();
- long memUsed = memdetail.getUsed();
- MemoryUsage before = membefore.get(name);
- long beforepercent = ((before.getUsed()*1000L)/before.getCommitted());
- long percent = ((memUsed*1000L)/before.getCommitted()); //>100% when it gets expanded
- 
- System.out.print(name + (memCommitted==memMax?"(fully expanded)":"(still expandable)") +"used: "+(beforepercent/10)+"."+(beforepercent%10)+"%->"+(percent/10)+"."+(percent%10)+"%("+((memUsed/1048576)+1)+"MB) / ");
- }
- System.out.println();
- totalGcDuration += info.getGcInfo().getDuration();
- long percent = totalGcDuration*1000L/info.getGcInfo().getEndTime();
- System.out.println("GC cumulated overhead "+(percent/10)+"."+(percent%10)+"%");
- }
- }
- };
- 
- //Add the listener
- emitter.addNotificationListener(listener, null, null);
- }
- */
 /**
  * Flone, The flying phone
  * By Lot Amor\u00f3s from Aeracoop
@@ -633,6 +487,7 @@ public void onCreate(Bundle savedInstanceState) {
   this.registerReceiver(BTReceiver, filter1);
   this.registerReceiver(BTReceiver, filter2);
   this.registerReceiver(BTReceiver, filter3);
+  this.getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 }
 
 public void onActivityResult (int requestCode, int resultCode, Intent data) {
@@ -675,6 +530,20 @@ public void onDestroy()
 {
   this.unregisterReceiver(BTReceiver);
 }
+
+long lastPress=0;
+@Override
+public void onBackPressed() {
+	System.out.println("back");
+	long currentTime = System.currentTimeMillis();
+	if(currentTime - lastPress > 5000){
+		Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_LONG).show();
+		lastPress = currentTime;
+	}else{
+		super.onBackPressed();
+	}
+}
+
 
 /**
  * Flone, The flying phone
@@ -2005,7 +1874,7 @@ class cDataArray {
 }
 /**
  * Flone, The flying phone
- * By Lot Amor\u00f3s from Aeracoop
+ * By Lot Amoros from Aeracoop
  * GPL v3
  * http://flone.aeracoop.net
  */
@@ -2196,29 +2065,7 @@ public void keyReleased() {
  .setNegativeButton("No", null)
  .show();
  }*/
-/**
- * Flone, The flying phone
- * tBlue.java - simple wrapper for Android Bluetooth libraries
- * (c) Tero Karvinen & Kimmo Karvinen http://terokarvinen.com/tblue
- * Modified version for flone by Lot Amor\u00f3s
- * http://flone.aeracoop.net
- */
-
 // tBlue.java - simple wrapper for Android Bluetooth libraries
-// (c) Tero Karvinen & Kimmo Karvinen http://terokarvinen.com/tblue
-// Modified version for flone by Lot Amor\u00f3s
-
-
-
-
-
-
-
-
-
-
-
-
 private final static int REQUEST_ENABLE_BT = 1;
 
 /*
@@ -2378,6 +2225,7 @@ public class TBlue {
   {
     return (socket!=null);
   }
+
 
   /*public String readString() 
   {
